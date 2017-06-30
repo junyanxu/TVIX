@@ -1,0 +1,147 @@
+Python 3.5.2 (default, Oct 11 2016, 14:46:33) 
+[GCC 4.2.1 Compatible Apple LLVM 7.0.2 (clang-700.1.81)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> >>> >>> r/folders/1y/z680gsgx5dnccmvn1t63n3nh0000gn/T/py3978l8D''', 'exec'));
+>>> 
+
+>>> import codecs, os;__pyfile = codecs.open('''/var/folders/1y/z680gsgx5dnccmvn1t63n3nh0000gn/T/py3978yGK''', encoding='''utf-8''');__code = __pyfile.read().encode('''utf-8''');__pyfile.close();os.remove('''/var/folders/1y/z680gsgx5dnccmvn1t63n3nh0000gn/T/py3978yGK''');exec(compile(__code, '''/Users/junyan/Desktop/tvix/main.py''', 'exec'));
+>>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/Users/junyan/Desktop/tvix/main.py", line 5, in <module>
+    from model.vix import build_vix_sig
+  File "/Users/junyan/Desktop/tvix/model/vix.py", line 59
+    print price
+              ^
+SyntaxError: Missing parentheses in call to 'print'
+import codecs, os;__pyfile = codecs.open('''/var/folders/1y/z680gsgx5dnccmvn1t63n3nh0000gn/T/py3978_QQ''', encoding='''utf-8''');__code = __pyfile.read().encode('''utf-8''');__pyfile.close();os.remove('''/var/folders/1y/z680gsgx5dnccmvn1t63n3nh0000gn/T/py3978_QQ''');exec(compile(__code, '''/Users/junyan/Desktop/tvix/model/vix.py''', 'exec'));
+>>> import codecs, os;__pyfile = codecs.open('''/Users/junyan/Desktop/tvix/model/vix.py''', encoding='''utf-8''');__code = __pyfile.read().encode('''utf-8''');__pyfile.close();exec(compile(__code, '''/Users/junyan/Desktop/tvix/model/vix.py''', 'exec'));
+>>> Date
+2007-01-03    12.040000
+2007-01-04    11.510000
+2007-01-05    12.140000
+2007-01-08    12.000000
+2007-01-09    11.910000
+2007-01-10    11.470000
+2007-01-11    10.870000
+2007-01-12    10.150000
+2007-01-16    10.740000
+2007-01-17    10.590000
+2007-01-18    10.850000
+2007-01-19    10.400000
+2007-01-22    10.770000
+2007-01-23    10.340000
+2007-01-24     9.890000
+2007-01-25    11.220000
+2007-01-26    11.130000
+2007-01-29    11.450000
+2007-01-30    10.960000
+2007-01-31    10.420000
+2007-02-01    10.310000
+2007-02-02    10.080000
+2007-02-05    10.550000
+2007-02-06    10.650000
+2007-02-07    10.320000
+2007-02-08    10.440000
+2007-02-09    11.100000
+2007-02-12    11.610000
+2007-02-13    10.340000
+2007-02-14    10.230000
+                ...    
+2017-03-29    11.420000
+2017-03-30    11.540000
+2017-03-31    12.370000
+2017-04-03    12.380000
+2017-04-04    11.790000
+2017-04-05    12.890000
+2017-04-06    12.390000
+2017-04-07    12.870000
+2017-04-10    14.050000
+2017-04-11    15.070000
+2017-04-12    15.770000
+2017-04-13    15.960000
+2017-04-17    14.660000
+2017-04-18    14.420000
+2017-04-19    14.930000
+2017-04-20    14.150000
+2017-04-21    14.630000
+2017-04-24    10.840000
+2017-04-25    10.760000
+2017-04-26    10.850000
+2017-04-27    10.360000
+2017-04-28    10.820000
+2017-05-01    10.110000
+2017-05-02    10.590000
+2017-05-03    10.680000
+2017-05-04    10.460000
+2017-05-05    10.570000
+2017-05-08     9.770000
+2017-05-09     9.960000
+2017-05-10    10.210000
+Name: Adj Close, dtype: object
+import codecs, os;__pyfile = codecs.open('''/Users/junyan/Desktop/tvix/model/vix.py''', encoding='''utf-8''');__code = __pyfile.read().encode('''utf-8''');__pyfile.close();exec(compile(__code, '''/Users/junyan/Desktop/tvix/model/vix.py''', 'exec'));
+>>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/Users/junyan/Desktop/tvix/model/vix.py", line 65, in <module>
+    vix_up_sig(price)
+  File "/Users/junyan/Desktop/tvix/model/vix.py", line 58, in vix_up_sig
+    vix = pd.DataFrame({"Adj Close": price, "Last Return": price.diff(1)/price.shift(1)})
+  File "/opt/local/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/pandas/core/series.py", line 1457, in diff
+    result = algos.diff(_values_from_object(self), periods)
+  File "/opt/local/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/pandas/core/algorithms.py", line 1225, in diff
+    out_arr[res_indexer] = arr[res_indexer] - arr[lag_indexer]
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
+import codecs, os;__pyfile = codecs.open('''/Users/junyan/Desktop/tvix/model/vix.py''', encoding='''utf-8''');__code = __pyfile.read().encode('''utf-8''');__pyfile.close();exec(compile(__code, '''/Users/junyan/Desktop/tvix/model/vix.py''', 'exec'));
+>>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/Users/junyan/Desktop/tvix/model/vix.py", line 65, in <module>
+    vix_up_sig(price)
+  File "/Users/junyan/Desktop/tvix/model/vix.py", line 58, in vix_up_sig
+    vix = pd.DataFrame({"Adj Close": price, "Last Return": price.diff(1)/price.shift(1)})
+  File "/opt/local/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/pandas/core/series.py", line 1457, in diff
+    result = algos.diff(_values_from_object(self), periods)
+  File "/opt/local/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/pandas/core/algorithms.py", line 1225, in diff
+    out_arr[res_indexer] = arr[res_indexer] - arr[lag_indexer]
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
+import codecs, os;__pyfile = codecs.open('''/var/folders/1y/z680gsgx5dnccmvn1t63n3nh0000gn/T/py3978MbW''', encoding='''utf-8''');__code = __pyfile.read().encode('''utf-8''');__pyfile.close();os.remove('''/var/folders/1y/z680gsgx5dnccmvn1t63n3nh0000gn/T/py3978MbW''');exec(compile(__code, '''/Users/junyan/Desktop/tvix/model/vix.py''', 'exec'));
+>>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/Users/junyan/Desktop/tvix/model/vix.py", line 62, in <module>
+    
+  File "/Users/junyan/Desktop/tvix/model/vix.py", line 58, in vix_up_sig
+    vix = pd.DataFrame({"Adj Close": price, "Last Return": price.diff(1)/price.shift(1)})
+  File "/opt/local/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/pandas/core/series.py", line 1457, in diff
+    result = algos.diff(_values_from_object(self), periods)
+  File "/opt/local/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/pandas/core/algorithms.py", line 1225, in diff
+    out_arr[res_indexer] = arr[res_indexer] - arr[lag_indexer]
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
+    result = algos.diff(_values_from_object(self), periods)
+  File "/opt/local/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/pandas/core/algorithms.py", line 1225, in diff
+    out_arr[res_indexer] = arr[res_indexer] - arr[lag_indexer]
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
+
+    result = algos.diff(_values_from_object(self), periods)
+  File "/opt/local/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/pandas/core/algorithms.py", line 1225, in diff
+    out_arr[res_indexer] = arr[res_indexer] - arr[lag_indexer]
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
+
+>>>   File "<stdin>", line 1
+    result = algos.diff(_values_from_object(self), periods)
+    ^
+IndentationError: unexpected indent
+>>>   File "<stdin>", line 1
+    File "/opt/local/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/pandas/core/algorithms.py", line 1225, in diff
+    ^
+IndentationError: unexpected indent
+>>>   File "<stdin>", line 1
+    out_arr[res_indexer] = arr[res_indexer] - arr[lag_indexer]
+    ^
+IndentationError: unexpected indent
+>>>   File "<stdin>", line 1
+    TypeError: unsupported operand type(s) for -: 'str' and 'str'
+             ^
+SyntaxError: invalid syntax
+>>> 
+
+>>> 
+
+>>> 
