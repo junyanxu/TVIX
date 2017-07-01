@@ -1,17 +1,21 @@
+from datetime import  datetime
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
+
 from model.vix import build_vix_sig
+from TVIX.data.data_util import read_data
 
 __author__ = 'junyan'
 holding_period = 1000
 locking_period = 40
 stoploss = 0.6
 
-tvix_data = pd.read_csv(
-    "/Users/junyan/Desktop/tvix/data/tvix.csv",
-    parse_dates=True).sort_values(['Date']).set_index('Date')
+start_date =
+
+tvix_data = read_data().set_index('Date')
 sp500_data = pd.read_csv(
     "/Users/junyan/Desktop/tvix/data/sp500.csv",
     parse_dates=True).sort_values(['Date']).set_index('Date')
@@ -69,13 +73,13 @@ def rolling_backtest(data):
             holding_count.append(1)
             enter.append(1)
             left.append(0)
-            
+
         elif background["tvix_last_return"] > 0 and position[-1] == -1:
             position.append(0)
             holding_count.append(0)
             enter.append(0)
             left.append(1)
-        
+
         elif holding_count[-1] == holding_period and position[-1] == -1:
             position.append(0)
             holding_count.append(0)
@@ -86,14 +90,14 @@ def rolling_backtest(data):
             holding_count.append(holding_count[-1]+1)
             enter.append(0)
             left.append(0)
-        
+
     data["position"] = position
     data["enter"] = enter
     data["left"] = left
     data["cum_pnl_single"] = (data['position'] * data["tvix_return"]).cumsum()
     data["cum_pnl_compound"] = (
         1 + data['position'] * data["tvix_return"]).cumprod()
-    
+
     plot, axe = plt.subplots(2, 2)
     data[
         [
