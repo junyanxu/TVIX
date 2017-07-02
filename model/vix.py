@@ -86,22 +86,7 @@ def vix_sell_sig(price_source, ma_length, show=True):
 
 def vix_gap_research(price, period=[3, 5]):
 
-    def _peak_apply_func(data, period1, period2):
-        assert len(data) == period1 + period2 + 1
-        return np.all(data[period1] > data[:period1]) and np.all(data[period1] > data[-period2:]) and data[0] < data[period1] and data[-1] < data[period1]
-
-    def _create_peaks(price, period):
-        peaks = pd.rolling_apply(price, period[0] + period[1] + 1, lambda x:_peak_apply_func(x, period[0], period[1])).shift(-period[1])
-        last_peak_date = peaks.index[0]
-        gaps = [np.nan]
-        for i in range(1, len(peaks)):
-            if peaks.values[i] == True:
-                gaps.append(np.busday_count(last_peak_date, peaks.index[i]))
-                last_peak_date = peaks.index[i]
-            else:
-                gaps.append(np.nan)
-        gaps = pd.Series(gaps, index=peaks.index)
-        return peaks, gaps
+    from TVIX.model.signal import create_peaks
 
     def _create_gap_stats_distribution(gaps_days):
         max_gap = np.max(gaps_days)
@@ -132,15 +117,6 @@ def vix_gap_research(price, period=[3, 5]):
         ax.set_ylabel('at next n days')
         ax.set_zlabel('probablity of up jump')
         plt.show()
-
-    def _create_thining_variable(price, suffix='_sp500'):
-        intra_day_vol = (
-            price["High{}".format(suffix)] - price["Low{}".format(suffix)]
-            + price["High{}".format(suffix)] - price["Open{}".format(suffix)]
-            + price["Close{}".format(suffix)] - price["Low{}".format(suffix)]
-        )/3/price["Open{}".format(suffix)]
-        EOD_day_vol = np.abs(price["Close{}".format(suffix)].diff(1))/price["Close{}".format(suffix)].shift(1)
-        price["Thining{}".format(suffix)] = EOD_day_vol.rolling(5).mean()
 
     def _append_past_n_gaps(vix, n):
         assert "gaps" in vix.columns
