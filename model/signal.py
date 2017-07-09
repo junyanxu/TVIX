@@ -42,7 +42,7 @@ def create_peaks(price, period):
     return peaks, gaps
 
 
-def create_thining_(price, suffix='_sp500'):
+def create_thining(price, suffix='_sp500'):
     intra_day_vol = (
         price["High{}".format(suffix)] - price["Low{}".format(suffix)]
         + price["High{}".format(suffix)] - price["Open{}".format(suffix)]

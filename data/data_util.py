@@ -7,6 +7,10 @@ import quandl
 QUANDL_API_KEY = 'AJH1cx5c8ZxqTrtaZXHr'
 quandl.ApiConfig.api_key = 'AJH1cx5c8ZxqTrtaZXHr'
 
+def get_first_business_of_month(dates):
+    from pandas.tseries.offsets import BDay
+    return dates - BDay() + BDay()
+
 def fetch_OHLC_cols(columns):
     OHLCV_map = dict()
     OHLCV = ['Open', 'High', 'Low', 'Close', 'Volume']
@@ -35,6 +39,12 @@ def read_data_from_quandl(start_date, end_date, ticker):
     mydata.rename(columns=OHLCV_map, inplace=True)
     return mydata[OHLCV_map.values()]
 
+def read_econ_data_from_quandl(start_date, end_date, ticker, dates_transform=get_first_business_of_month):
+    mydata = quandl.get(ticker, start_date=start_date, end_date=end_date)
+    if dates_transform:
+        mydata.index = dates_transform(mydata.index)
+    return mydata
+
 
 data_ticker_hash = {
     'sp500':'CHRIS/CME_SP1',
@@ -44,12 +54,18 @@ data_ticker_hash = {
     'tvix':'TVIX',
     'VIX':'CBOE/VIX',
     'vix':'CBOE/VIX',
+    'CL':'CHRIS/CME_CL1',
+    'oil':'CHRIS/CME_CL1',
+    'pmi':'ISM/MAN_PMI',
+    'PMI':'ISM/MAN_PMI',
 }
 
 data_process_hash = {
     'TVIX':read_data_from_google,
     'CBOE/VIX':read_data_from_quandl,
     'CHRIS/CME_SP1':read_data_from_quandl,
+    'CHRIS/CME_CL1':read_data_from_quandl,
+    'ISM/MAN_PMI':read_econ_data_from_quandl,
 }
 
 
