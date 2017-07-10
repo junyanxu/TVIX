@@ -17,7 +17,7 @@ def create_PMI_health(pmi):
     up_scale = np.max(pmi["Index"][pmi["Index"] > 50] - 50)
     down_scale = np.max(50 - pmi["Index"][pmi["Index"] < 50])
     pmi["PMI_Health"] = pmi["Index"].apply(
-        lambda x: (x-50)/up_scale if x > 50 else (x - 50)/down_scale
+        lambda x: (x-50)/up_scale if x > 50 else (x-50)/down_scale
     )
 
 
