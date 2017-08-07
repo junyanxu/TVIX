@@ -5,10 +5,12 @@ from pandas.tseries.offsets import MonthBegin, BDay, Day
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-%matplotlib inline
 
 start_date = datetime(2010, 12, 1)
 end_date = datetime(2017, 6, 30)
+
+
+%matplotlib inline
 
 tvix = read_data(start_date, end_date, 'tvix')
 tvix["date"] = tvix.index.copy()
@@ -20,7 +22,7 @@ tvix["night_return"] = (tvix['Open_n1']- tvix['Close'])/tvix['Close']
 tvix["night_return_n1"] = tvix["night_return"].shift(-1)
 tvix["night_return_indicator"] = tvix["night_return"].apply(lambda x: 1 if x>0.05 else 0)
 tvix["day_return_indicator"] = tvix["day_return"].apply(lambda x: 1 if x>0.05 else 0)
-tvix["concern_indicator"] = tvix["night_return_indicator"] + tvix["day_return_indicator"]
+tvix["concern_indicator"] = (tvix["night_return_indicator"] | tvix["day_return_indicator"])
 tvix = attach_PMI_index(tvix)
 tvix = tvix.dropna()
 tvix

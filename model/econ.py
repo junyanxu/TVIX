@@ -6,11 +6,22 @@ import pandas as pd
 import numpy as np
 
 
-def create_PMI_RSI(pmi):
-    pmi["PMI_Return"] = pmi["Index"].diff(1)/pmi["Index"].shift(1)
-    pmi["PMI_RSI"] = pmi["PMI_Return"].rolling(window=6).apply(
-        lambda x: np.sum(x[x > 0])/np.sum(np.abs(x))
-    )
+def create_PMI_RSI(pmi, method='regression', window=9):
+    if method == 'classic':
+        pmi["PMI_Return"] = pmi["Index"].diff(1)/pmi["Index"].shift(1)
+        pmi["PMI_RSI"] = pmi["PMI_Return"].rolling(window=window).apply(
+            lambda x: np.sum(x[x > 0])/np.sum(np.abs(x))
+            )
+    if method == 'regression':
+        from scipy.stats import linregress
+        def linear_regression_apply(x):
+            slope, intercept, r_value, p_value, std_err = linregress(
+                np.arange(len(x)), x
+            )
+            return slope
+        pmi["PMI_RSI"] = pmi["Index"].rolling(window=window).apply(
+            linear_regression_apply
+            )
 
 
 def create_PMI_health(pmi):

@@ -84,4 +84,4 @@ def read_data(start_date, end_date, ticker):
 if __name__ == '__main__':
     start_date = datetime(2010, 1, 1)
     end_date = datetime.today()
-    print read_data(start_date, end_date, 'tvix')
+    print(read_data(start_date, end_date, 'tvix'))

@@ -1,50 +1,29 @@
-from datetime import  datetime
-
-import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
+import matplotlib.pyplot as plt
 
-
-from model.vix import build_vix_sig
 from TVIX.data.data_util import read_data
+from TVIX.model.econ import attach_PMI_index
 
-__author__ = 'junyan'
-holding_period = 1000
-locking_period = 40
-stoploss = 0.6
+start_date = pd.datetime(2011, 1, 1)
+end_date = pd.datetime.today()
+holding_period = 10
 
-start_date = pd.datetime(2011, 12, 1)
-
-tvix_data = read_data().set_index('Date')
-sp500_data = pd.read_csv(
-    "/Users/junyan/Desktop/tvix/data/sp500.csv",
-    parse_dates=True).sort_values(['Date']).set_index('Date')
-
-tvix_data.columns = ["tvix_" + i for i in tvix_data.columns]
-sp500_data.columns = ["sp500_" + i for i in sp500_data.columns]
-
-sp500_data["sp500_60 return"] = (sp500_data["sp500_Adj Close"].diff(60) /
-                                 sp500_data["sp500_Adj Close"])
-sp500_data["sp500_120 return"] = (sp500_data["sp500_Adj Close"].diff(120) /
-                                  sp500_data["sp500_Adj Close"])
-data = pd.concat(
-    [tvix_data, sp500_data],
-    axis=1, join='outer')
-
-
-data["tvix_40_return"] = (
-    data["tvix_Adj Close"].diff(40).shift(-40) /
-    data["tvix_Adj Close"]
+tvix = read_data(start_date, end_date, 'tvix')
+tvix['date'] = tvix.index
+tvix['tvix_last_return'] = tvix['Close'].diff(1)/tvix['Close'].shift(1)
+tvix['tvix_return'] = tvix['Close'].diff(1).shift(-1)/tvix['Close']
+tvix['vix_sell_sig'] = tvix['Close'].rolling(4).apply(
+    lambda x: (x[0] < x[1]) and (x[1] > x[2]) and (x[2] > x[3])
+    # lambda x: (x[0] < x[1]) and (x[1] > x[2])
 )
 
-data["tvix_last_return"] = (
-    data["tvix_Adj Close"].diff(1)/data["tvix_Adj Close"]
-)
-data["tvix_return"] = data["tvix_last_return"].shift(-1)
+tvix = attach_PMI_index(tvix)
 
-data = data.dropna()
-data = pd.merge(data, build_vix_sig(2, show=False),
-                how='inner', left_index=True, right_index=True)
+def current_econ_is_health(background):
+    if background.PMI_Health > 0.1 and background.PMI_RSI > -0.7:
+        return True
+    else:
+        return False
 
 def compute_max_drawn_down(PNL):
     current_max = PNL[0]
@@ -57,6 +36,7 @@ def compute_max_drawn_down(PNL):
         )
     return current_max_drawn_down
 
+
 def rolling_backtest(data):
     dates = data.index
     position = [0]
@@ -68,7 +48,7 @@ def rolling_backtest(data):
     left = [0]
     for i in dates[1:]:
         background = data.loc[i, :]
-        if background['vix_sell_sig'] == 1 and position[-1] == 0:
+        if background['vix_sell_sig'] == 1 and position[-1] == 0 and current_econ_is_health(background):
             position.append(-1)
             holding_count.append(1)
             enter.append(1)
@@ -102,28 +82,33 @@ def rolling_backtest(data):
     data[
         [
             "cum_pnl_single",
-            "sp500_Adj Close"
+            "PMI_Health",
+            "PMI_RSI",
         ]
-    ].plot(ax=axe[0][0], secondary_y="sp500_Adj Close")
+    ].plot(ax=axe[0][0], secondary_y=["PMI_Health", "PMI_RSI"])
 
     data[
         [
             "cum_pnl_compound",
-            "sp500_Adj Close"
+            "PMI_Health",
+            "PMI_RSI",
         ]
-    ].plot(ax=axe[1][0], secondary_y="sp500_Adj Close")
-    axe[0][1].hist(data['tvix_return'][data['position'] == -1], bins=30)
+
+    ].plot(ax=axe[1][0], secondary_y=["PMI_Health", "PMI_RSI"])
+    # axe[0][1].hist(data['tvix_return'][data['position'] == -1], bins=30)
     monthly_pnl = data['cum_pnl_compound'].resample('M', how='last')
     (monthly_pnl.diff()/monthly_pnl.shift(1)).plot(ax=axe[1][1])
     print(data[["position", "tvix_return",
-                "vix_Adj Close",
                 "vix_sell_sig",
                 "left"]])
-    data.to_excel("result.xlsx")
-    plt.show()
+
 
 
 if __name__ == '__main__':
-    rolling_backtest(data)
-    print("max drawndown:", compute_max_drawn_down(data.cum_pnl_compound))
+    rolling_backtest(tvix)
+    print("max drawndown:", compute_max_drawn_down(tvix.cum_pnl_compound))
+    tvix.to_csv('simulation_{}.csv'.format(
+        pd.datetime.today().strftime('%Y-%m-%d')
+        )
+    )
     plt.show()
