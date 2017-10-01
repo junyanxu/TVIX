@@ -19,6 +19,8 @@ tvix['vix_sell_sig'] = tvix['Close'].rolling(4).apply(
 
 tvix = attach_PMI_index(tvix)
 
+
+
 def current_econ_is_health(background):
     if background.PMI_Health > 0.1 and background.PMI_RSI > -0.7:
         return True
@@ -97,16 +99,16 @@ def rolling_backtest(data):
     ].plot(ax=axe[1][0], secondary_y=["PMI_Health", "PMI_RSI"])
     # axe[0][1].hist(data['tvix_return'][data['position'] == -1], bins=30)
     monthly_pnl = data['cum_pnl_compound'].resample('M', how='last')
-    (monthly_pnl.diff()/monthly_pnl.shift(1)).plot(ax=axe[1][1])
-    print(data[["position", "tvix_return",
-                "vix_sell_sig",
-                "left"]])
+    #(monthly_pnl.diff()/monthly_pnl.shift(1)).plot(ax=axe[1][1])
+    # print(data[["position", "tvix_return",
+    #            "vix_sell_sig",
+    #            "left"]])
 
 
 
 if __name__ == '__main__':
     rolling_backtest(tvix)
-    print("max drawndown:", compute_max_drawn_down(tvix.cum_pnl_compound))
+    #print("max drawndown:", compute_max_drawn_down(tvix.cum_pnl_compound))
     tvix.to_csv('simulation_{}.csv'.format(
         pd.datetime.today().strftime('%Y-%m-%d')
         )

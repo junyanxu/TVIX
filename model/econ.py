@@ -51,6 +51,8 @@ def attach_PMI_index(df):
         right_on='date',
         how='left'
     )
+    res = res.fillna(method='ffill')
+    import pdb; pdb.set_trace()
     res = res.drop(["month_start", "first_B_day_of_month", "date_y"], axis=1)
     res = res.rename(columns = {"date_x": "date"})
     res.index = res["date"]
